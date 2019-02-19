@@ -1,0 +1,21 @@
+les net 1
+
+# Define hyperparameters
+self.epochs = 100
+self.batch_size = 64
+self.learning_rate = 5e-2
+self.early_stop_count = 4
+
+Final test accuracy: 0.7303
+Final validation accuracy: 0.7326
+Final training accuracy: 0.9266222222222222
+Final test loss: 0.9652006798868726
+Final validation loss: 0.9399897335450861
+Final training loss: 0.2161347750807181
+
+tested other hyperparameters
+    acc 70-73
+    batch_size 32
+    learning_rate 0.5, 0.05 0.01 0.005
+
+    similar test accuracy with more epochs to converge
