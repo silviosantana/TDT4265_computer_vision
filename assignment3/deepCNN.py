@@ -23,29 +23,32 @@ class ExampleModel(nn.Module):
         self.feature_extractor = nn.Sequential(
             nn.Conv2d(
                 in_channels=image_channels,
-                out_channels=32,
-                kernel_size=3,
-                stride=1,
-                padding=1
-            ),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=32,
-                out_channels=64,
-                kernel_size=3,
-                stride=1,
-                padding=1
-            ),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=64,
                 out_channels=128,
                 kernel_size=3,
                 stride=1,
                 padding=1
             ),
+            nn.BatchNorm2d(128),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
+                out_channels=128,
+                kernel_size=3,
+                stride=1,
+                padding=1
+            ),
+            nn.BatchNorm2d(128),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
+                out_channels=128,
+                kernel_size=3,
+                stride=1,
+                padding=1
+            ),
+            #nn.BatchNorm2d(128),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU()
         )
@@ -58,6 +61,7 @@ class ExampleModel(nn.Module):
         # included with nn.CrossEntropyLoss
         self.classifier = nn.Sequential(
             nn.Linear(self.num_output_features, 64),
+            nn.BatchNorm1d(64),
             nn.ReLU(),
             nn.Linear(64, num_classes)
         )
@@ -77,19 +81,98 @@ class ExampleModel(nn.Module):
         x = self.classifier(x)
         return x
 
+    
+
+class StrideModel(nn.Module):
+
+    def __init__(self,
+                 image_channels,
+                 num_classes):
+        """
+            Is called when model is initialized.
+            Args:
+                image_channels. Number of color channels in image (3)
+                num_classes: Number of classes we want to predict (10)
+        """
+        super().__init__()
+
+        # Define the convolutional layers
+        self.feature_extractor = nn.Sequential(
+            nn.Conv2d(
+                in_channels=image_channels,
+                out_channels=128,
+                kernel_size=3,
+                stride=2,
+                padding=1
+            ),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
+                out_channels=128,
+                kernel_size=3,
+                stride=2,
+                padding=1
+            ),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
+                out_channels=128,
+                kernel_size=3,
+                stride=2,
+                padding=1
+            ),
+            nn.BatchNorm2d(128),
+            nn.ReLU()
+        )
+        # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
+        self.num_output_features = 128*4*4
+        # Initialize our last fully connected layer
+        # Inputs all extracted features from the convolutional layers
+        # Outputs num_classes predictions, 1 for each class.
+        # There is no need for softmax activation function, as this is
+        # included with nn.CrossEntropyLoss
+        self.classifier = nn.Sequential(
+            nn.Linear(self.num_output_features, 64),
+            nn.BatchNorm1d(64),
+            nn.ReLU(),
+            nn.Linear(64, num_classes)
+        )
+
+    def forward(self, x):
+        """
+        Performs a forward pass through the model
+        Args:
+            x: Input image, shape: [batch_size, 3, 32, 32]
+        """
+
+        # Run image through convolutional layers
+        x = self.feature_extractor(x)
+        # Reshape our input to (batch_size, num_output_features)
+        x = x.view(-1, self.num_output_features)
+        # Forward pass through the fully-connected layers.
+        x = self.classifier(x)
+        return x
+    
+def init_weights(m):
+    if type(m) == nn.Conv2d:
+        torch.nn.init.xavier_normal_(m.weight)
 
 class Trainer:
-
+    
     def __init__(self):
         """
         Initialize our trainer class.
         Set hyperparameters, architecture, tracking variables etc.
         """
         # Define hyperparameters
-        self.epochs = 100
-        self.batch_size = 128
+        self.epochs = 11
+        self.batch_size = 64
         self.learning_rate = 5e-2
         self.early_stop_count = 4
+
+        self.weight_decay = 0.01
 
         # Architecture
 
@@ -97,12 +180,19 @@ class Trainer:
         self.loss_criterion = nn.CrossEntropyLoss()
         # Initialize the mode
         self.model = ExampleModel(image_channels=3, num_classes=10)
+        self.model.apply(init_weights)
         # Transfer model to GPU VRAM, if possible.
         self.model = to_cuda(self.model)
 
         # Define our optimizer. SGD = Stochastich Gradient Descent
         self.optimizer = torch.optim.SGD(self.model.parameters(),
-                                         self.learning_rate)
+                                         self.learning_rate,
+                                         weight_decay=self.weight_decay)
+
+        # Define our optimizer. SGD = Stochastich Gradient Descent
+        self.optimizer = torch.optim.Adam(self.model.parameters(),
+                                            self.learning_rate,
+                                            weight_decay=self.weight_decay)
 
         # Load our dataset
         self.dataloader_train, self.dataloader_val, self.dataloader_test = load_cifar10(self.batch_size)
@@ -197,7 +287,7 @@ class Trainer:
                     self.validation_epoch()
                     # Check early stopping criteria.
                     if self.should_early_stop():
-                        print("Early stopping.")
+                        print("Early stopping. Number of epochs: ", epoch)
                         return
 
 
