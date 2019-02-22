@@ -28,6 +28,7 @@ class ExampleModel(nn.Module):
                 stride=1,
                 padding=1
             ),
+            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU(),
             nn.BatchNorm2d(128),
             nn.Conv2d(
@@ -47,15 +48,6 @@ class ExampleModel(nn.Module):
                 stride=1,
                 padding=1
             ),
-            nn.ReLU(),
-            nn.BatchNorm2d(128),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=128,
-                kernel_size=3,
-                stride=1,
-                padding=1
-            ),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU(),
             nn.BatchNorm2d(128),
@@ -66,6 +58,7 @@ class ExampleModel(nn.Module):
                 stride=1,
                 padding=1
             ),
+            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU(),
             nn.BatchNorm2d(128),
             nn.Conv2d(
@@ -80,7 +73,7 @@ class ExampleModel(nn.Module):
             nn.BatchNorm2d(128)
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
-        self.num_output_features = 128*4*4
+        self.num_output_features = 128*1*1
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
         # Outputs num_classes predictions, 1 for each class.
@@ -88,9 +81,6 @@ class ExampleModel(nn.Module):
         # included with nn.CrossEntropyLoss
         self.classifier = nn.Sequential(
             nn.Linear(self.num_output_features, 128),
-            nn.ReLU(),
-            nn.BatchNorm1d(128),
-            nn.Linear(128, 128),
             nn.ReLU(),
             nn.BatchNorm1d(128),
             nn.Linear(128, 64),
@@ -115,79 +105,6 @@ class ExampleModel(nn.Module):
         return x
 
     
-
-class StrideModel(nn.Module):
-
-    def __init__(self,
-                 image_channels,
-                 num_classes):
-        """
-            Is called when model is initialized.
-            Args:
-                image_channels. Number of color channels in image (3)
-                num_classes: Number of classes we want to predict (10)
-        """
-        super().__init__()
-
-        # Define the convolutional layers
-        self.feature_extractor = nn.Sequential(
-            nn.Conv2d(
-                in_channels=image_channels,
-                out_channels=128,
-                kernel_size=3,
-                stride=2,
-                padding=1
-            ),
-            nn.BatchNorm2d(128),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=128,
-                kernel_size=3,
-                stride=2,
-                padding=1
-            ),
-            nn.BatchNorm2d(128),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=128,
-                kernel_size=3,
-                stride=2,
-                padding=1
-            ),
-            nn.BatchNorm2d(128),
-            nn.ReLU()
-        )
-        # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
-        self.num_output_features = 128*4*4
-        # Initialize our last fully connected layer
-        # Inputs all extracted features from the convolutional layers
-        # Outputs num_classes predictions, 1 for each class.
-        # There is no need for softmax activation function, as this is
-        # included with nn.CrossEntropyLoss
-        self.classifier = nn.Sequential(
-            nn.Linear(self.num_output_features, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Linear(64, num_classes)
-        )
-
-    def forward(self, x):
-        """
-        Performs a forward pass through the model
-        Args:
-            x: Input image, shape: [batch_size, 3, 32, 32]
-        """
-
-        # Run image through convolutional layers
-        x = self.feature_extractor(x)
-        # Reshape our input to (batch_size, num_output_features)
-        x = x.view(-1, self.num_output_features)
-        # Forward pass through the fully-connected layers.
-        x = self.classifier(x)
-        return x
-    
 def init_weights(m):
     if type(m) == nn.Conv2d:
         torch.nn.init.xavier_normal_(m.weight)
@@ -205,7 +122,7 @@ class Trainer:
         self.learning_rate = 5e-3
         self.early_stop_count = 4
 
-        self.weight_decay = 0.0001
+        self.weight_decay = 0
 
         # Architecture
 

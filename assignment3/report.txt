@@ -130,6 +130,8 @@ Final training loss: 0.3139859504934231
 
 
 ###Adam
+
+Needs batch Normalization and does not work with L2 regularization
 Final test accuracy: 0.1
 Final validation accuracy: 0.1026
 Final training accuracy: 0.09971111111111111
