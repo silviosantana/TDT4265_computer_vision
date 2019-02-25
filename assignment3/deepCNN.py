@@ -6,7 +6,7 @@ from dataloaders import load_cifar10
 from utils import to_cuda, compute_loss_and_accuracy
 
 
-class ExampleModel(nn.Module):
+class DeepCNNModel(nn.Module):
 
     def __init__(self,
                  image_channels,
@@ -115,7 +115,7 @@ class ExampleModel(nn.Module):
         return x
 
     
-
+## This Model uses Stride greater than 1 instead of Pooling
 class StrideModel(nn.Module):
 
     def __init__(self,
@@ -187,10 +187,15 @@ class StrideModel(nn.Module):
         # Forward pass through the fully-connected layers.
         x = self.classifier(x)
         return x
-    
+
 def init_weights(m):
-    if type(m) == nn.Conv2d:
+    if type(m) == torch.nn.Conv2d:
         torch.nn.init.xavier_normal_(m.weight)
+        if m.bias is not None:
+            m.bias.data.fill_(0.0)
+    if type(m) == torch.nn.Linear:
+        torch.nn.init.xavier_normal_(m.weight)
+        m.bias.data.fill_(0.0)
 
 class Trainer:
     
@@ -212,7 +217,7 @@ class Trainer:
         # Since we are doing multi-class classification, we use the CrossEntropyLoss
         self.loss_criterion = nn.CrossEntropyLoss()
         # Initialize the mode
-        self.model = ExampleModel(image_channels=3, num_classes=10)
+        self.model = DeepCNNModel(image_channels=3, num_classes=10)
         self.model.apply(init_weights)
         # Transfer model to GPU VRAM, if possible.
         self.model = to_cuda(self.model)
@@ -337,7 +342,7 @@ if __name__ == "__main__":
     plt.plot(trainer.TRAIN_LOSS, label="Training loss")
     plt.plot(trainer.TEST_LOSS, label="Testing Loss")
     plt.legend()
-    plt.savefig(os.path.join("plots", "final_loss.png"))
+    plt.savefig(os.path.join("plots", "final_loss_CNN_1.png"))
     plt.show()
 
     plt.figure(figsize=(12, 8))
@@ -346,7 +351,7 @@ if __name__ == "__main__":
     plt.plot(trainer.TRAIN_ACC, label="Training Accuracy")
     plt.plot(trainer.TEST_ACC, label="Testing Accuracy")
     plt.legend()
-    plt.savefig(os.path.join("plots", "final_accuracy.png"))
+    plt.savefig(os.path.join("plots", "final_accuracy_CNN_1.png"))
     plt.show()
 
     print("Final test accuracy:", trainer.TEST_ACC[-trainer.early_stop_count])

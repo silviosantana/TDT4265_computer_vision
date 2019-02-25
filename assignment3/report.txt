@@ -156,7 +156,274 @@ Final test loss: 0.7895044948265051
 Final validation loss: 0.7933129321170759
 Final training loss: 0.3593941417057067
 
+####################### RESULTS FROM TASK 1
+
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.305645824987677  Accuracy: 0.092
+Current validation loss: 2.304214399072188  Accuracy: 0.0922
+Current validation loss: 1.6515493408034119  Accuracy: 0.3924
+Current validation loss: 1.4894520738456822  Accuracy: 0.4624
+Current validation loss: 1.2399720625032353  Accuracy: 0.555
+Current validation loss: 1.337616831441469  Accuracy: 0.5314
+Current validation loss: 1.1142456810685653  Accuracy: 0.6074
+Current validation loss: 1.319983526121212  Accuracy: 0.5596
+Current validation loss: 0.9034698779069925  Accuracy: 0.6926
+Current validation loss: 0.9017942351630971  Accuracy: 0.6866
+Current validation loss: 0.8978157481060752  Accuracy: 0.6948
+Current validation loss: 0.8406852234767962  Accuracy: 0.7148
+Current validation loss: 0.8653683039960982  Accuracy: 0.709
+Current validation loss: 1.2288361116300655  Accuracy: 0.6092
+Current validation loss: 0.9396785524072526  Accuracy: 0.7012
+Current validation loss: 1.0810983037646813  Accuracy: 0.6626
+Current validation loss: 0.8560162888297552  Accuracy: 0.7382
+Current validation loss: 1.1745642906502833  Accuracy: 0.6596
+Current validation loss: 1.0015779507311084  Accuracy: 0.7236
+Current validation loss: 1.131658595574053  Accuracy: 0.6788
+Current validation loss: 0.9723622934727729  Accuracy: 0.7386
+Current validation loss: 0.9692724396156359  Accuracy: 0.7218
+Current validation loss: 1.3170300488230549  Accuracy: 0.691
+Current validation loss: 1.3320431109470656  Accuracy: 0.6534
+Current validation loss: 1.1132326224182225  Accuracy: 0.7476
+Current validation loss: 1.378771739669993  Accuracy: 0.7048
+Current validation loss: 1.3724211009242866  Accuracy: 0.7202
+Current validation loss: 1.1297534930555126  Accuracy: 0.7376
+Current validation loss: 1.374362163905856  Accuracy: 0.7334
+Current validation loss: 1.3812430478349518  Accuracy: 0.7074
+Current validation loss: 1.4200121013424065  Accuracy: 0.7388
+Early stopping.
+Final test accuracy: 0.7408
+Final validation accuracy: 0.7376
+Final training accuracy: 0.9640888888888889
+Final test loss: 1.2007702655473333
+Final validation loss: 1.1297534930555126
+Final training loss: 0.10885026154044847
+
+
+####################### RESULTS FROM TASK 2
+
+########### CNN1
+
+Current validation loss: 2.3025849529459506  Accuracy: 0.123
+Current validation loss: 2.302974314629277  Accuracy: 0.1034
+Current validation loss: 1.299549967427797  Accuracy: 0.5354
+Current validation loss: 1.0596637937087048  Accuracy: 0.621
+Current validation loss: 0.9259212929991227  Accuracy: 0.6664
+Current validation loss: 0.7880116795437245  Accuracy: 0.7226
+Current validation loss: 0.8148375244080266  Accuracy: 0.7182
+Current validation loss: 0.6878387256513668  Accuracy: 0.7612
+Current validation loss: 0.6975101760671109  Accuracy: 0.7632
+Current validation loss: 0.7424082167540924  Accuracy: 0.7404
+Current validation loss: 0.6351957230628291  Accuracy: 0.7784
+Current validation loss: 0.6670587873911555  Accuracy: 0.7678
+Current validation loss: 0.6512242842324173  Accuracy: 0.7788
+Current validation loss: 0.6247876671296132  Accuracy: 0.7778
+Current validation loss: 0.5944534543948837  Accuracy: 0.7968
+Current validation loss: 0.6439893268331697  Accuracy: 0.7728
+Current validation loss: 0.5793201855466336  Accuracy: 0.7976
+Current validation loss: 0.6320699328863169  Accuracy: 0.783
+Current validation loss: 0.649191249020492  Accuracy: 0.7784
+Current validation loss: 0.598639694573004  Accuracy: 0.7928
+Current validation loss: 0.6375596636458288  Accuracy: 0.7852
+Current validation loss: 0.6022628262827668  Accuracy: 0.7976
+Current validation loss: 0.6745333909233914  Accuracy: 0.7766
+Final test accuracy: 0.784
+Final validation accuracy: 0.7928
+Final training accuracy: 0.8595333333333334
+Final test loss: 0.6371451130338536
+Final validation loss: 0.598639694573004
+Final training loss: 0.40895108362151816
+
+Current validation loss: 2.3025963396965703  Accuracy: 0.0982
+Current validation loss: 2.3020872466171842  Accuracy: 0.1046
+Current validation loss: 1.2960938781122617  Accuracy: 0.5286
+Current validation loss: 1.0469979530648341  Accuracy: 0.6288
+Current validation loss: 0.9217136721067791  Accuracy: 0.6856
+Current validation loss: 0.8494614415530917  Accuracy: 0.6992
+Current validation loss: 0.7894388520264928  Accuracy: 0.727
+Current validation loss: 0.7193577549880064  Accuracy: 0.7482
+Current validation loss: 0.8392124500455735  Accuracy: 0.7188
+Current validation loss: 0.7086281953733179  Accuracy: 0.7576
+Current validation loss: 0.6680742411673823  Accuracy: 0.7712
+Current validation loss: 0.7463190861140625  Accuracy: 0.748
+Current validation loss: 0.6502947905395604  Accuracy: 0.7796
+Current validation loss: 0.6205810961089556  Accuracy: 0.7858
+Current validation loss: 0.601094430006003  Accuracy: 0.7958
+Current validation loss: 0.7878014837639241  Accuracy: 0.7432
+Current validation loss: 0.5680318278602406  Accuracy: 0.8088
+Current validation loss: 0.7119867481008361  Accuracy: 0.7568
+Current validation loss: 0.6252055190786531  Accuracy: 0.785
+Current validation loss: 0.639014106008071  Accuracy: 0.7806
+Current validation loss: 0.6246939275083663  Accuracy: 0.7894
+Current validation loss: 0.6143880207327348  Accuracy: 0.7884
+Current validation loss: 0.6372355882880054  Accuracy: 0.7932
+Final test accuracy: 0.7801
+Final validation accuracy: 0.7806
+Final training accuracy: 0.8458888888888889
+Final test loss: 0.6493268440103834
+Final validation loss: 0.639014106008071
+Final training loss: 0.4493616053368896
+
+
+########### CNN2
+
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.302693010885504  Accuracy: 0.091
+Current validation loss: 2.3022580991817425  Accuracy: 0.1036
+Current validation loss: 1.2459753351875498  Accuracy: 0.5474
+Current validation loss: 1.0704695755922342  Accuracy: 0.6228
+Current validation loss: 0.8908984102780306  Accuracy: 0.6998
+Current validation loss: 0.8014971410171895  Accuracy: 0.7186
+Current validation loss: 0.7499566395071489  Accuracy: 0.7414
+Current validation loss: 0.9079298535479775  Accuracy: 0.689
+Current validation loss: 0.716129616091523  Accuracy: 0.7538
+Current validation loss: 0.7512686807143537  Accuracy: 0.7532
+Current validation loss: 0.6937937193279025  Accuracy: 0.764
+Current validation loss: 0.6414081488229051  Accuracy: 0.7872
+Current validation loss: 0.6623553690276568  Accuracy: 0.7852
+Current validation loss: 0.6889525734925572  Accuracy: 0.7738
+Current validation loss: 0.7161201766774624  Accuracy: 0.7894
+Early stopping. Number of epochs:  6
+Final test accuracy: 0.7838
+Final validation accuracy: 0.7872
+Final training accuracy: 0.8964888888888889
+Final test loss: 0.6493853628635406
+Final validation loss: 0.6414081488229051
+Final training loss: 0.3166349702514708
+
+
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.302584023415288  Accuracy: 0.1012
+Current validation loss: 2.3022196292877197  Accuracy: 0.1064
+Current validation loss: 1.3387076190755338  Accuracy: 0.52
+Current validation loss: 1.0717504741270332  Accuracy: 0.6254
+Current validation loss: 0.8968365705465968  Accuracy: 0.6828
+Current validation loss: 0.8572683628601364  Accuracy: 0.7014
+Current validation loss: 0.7942947594425346  Accuracy: 0.7282
+Current validation loss: 0.7098374449754064  Accuracy: 0.753
+Current validation loss: 0.7280953477455091  Accuracy: 0.7492
+Current validation loss: 0.7174424453626705  Accuracy: 0.7576
+Current validation loss: 0.6605260096773317  Accuracy: 0.7804
+Current validation loss: 0.6978944517389128  Accuracy: 0.766
+Current validation loss: 0.7002474899533428  Accuracy: 0.7772
+Current validation loss: 0.6680439322055141  Accuracy: 0.7772
+Current validation loss: 0.6764391626738295  Accuracy: 0.7854
+Current validation loss: 0.7216587666469284  Accuracy: 0.7764
+Current validation loss: 0.721406695208972  Accuracy: 0.7814
+Current validation loss: 0.7586017247242264  Accuracy: 0.7728
+Current validation loss: 0.8492446741725825  Accuracy: 0.773
+Current validation loss: 0.7616706294349477  Accuracy: 0.7816
+Current validation loss: 0.8833901395526114  Accuracy: 0.774
+Current validation loss: 0.813125411543665  Accuracy: 0.7802
+Current validation loss: 0.8433793270135228  Accuracy: 0.789
+Final test accuracy: 0.7777
+Final validation accuracy: 0.7816
+Final training accuracy: 0.9612222222222222
+Final test loss: 0.7671436315319341
+Final validation loss: 0.7616706294349477
+Final training loss: 0.12017139068550685
 
 
 
+####################### RESULTS FROM TASK 3
 
+## CNN2
+Training ResNet18
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.4869749257518987  Accuracy: 0.078
+Current validation loss: 2.432013305129519  Accuracy: 0.1102
+Current validation loss: 0.4331739066987281  Accuracy: 0.8496
+Current validation loss: 0.41479097463332926  Accuracy: 0.856
+Current validation loss: 0.4255648918307511  Accuracy: 0.8534
+Current validation loss: 0.3647306845256477  Accuracy: 0.8774
+Current validation loss: 0.3483873029613191  Accuracy: 0.8826
+ResNet18 Results
+Final test accuracy: 0.8517
+Final validation accuracy: 0.856
+Final training accuracy: 0.9136444444444445
+Final test loss: 0.4313965023944553
+Final validation loss: 0.41479097463332926
+Final training loss: 0.25385746705612566
+Training Deep CNN
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.3024924827527395  Accuracy: 0.101
+Current validation loss: 2.3026293259632737  Accuracy: 0.0948
+Current validation loss: 1.2527006027064747  Accuracy: 0.5454
+Current validation loss: 1.0457722016527682  Accuracy: 0.6328
+Current validation loss: 0.8460955378375475  Accuracy: 0.6992
+Current validation loss: 0.8272751166096216  Accuracy: 0.7138
+Current validation loss: 0.7728878425646432  Accuracy: 0.7346
+Current validation loss: 0.7088274865210811  Accuracy: 0.76
+Current validation loss: 0.7367765907245346  Accuracy: 0.7558
+Current validation loss: 0.6645194510870343  Accuracy: 0.7678
+Current validation loss: 0.6788198325452925  Accuracy: 0.7736
+Current validation loss: 0.6597591789462899  Accuracy: 0.7714
+Current validation loss: 0.6774853750874724  Accuracy: 0.7788
+Current validation loss: 0.7487706953211676  Accuracy: 0.7622
+Current validation loss: 0.700160349094415  Accuracy: 0.7836
+Current validation loss: 0.6969187421889245  Accuracy: 0.7818
+Current validation loss: 0.7571749887134456  Accuracy: 0.788
+Current validation loss: 0.7449161738534517  Accuracy: 0.7826
+Current validation loss: 0.814148226116277  Accuracy: 0.7874
+Current validation loss: 0.7434142511102217  Accuracy: 0.7874
+Current validation loss: 0.865908483161202  Accuracy: 0.7842
+Current validation loss: 0.7995507132403458  Accuracy: 0.7898
+Current validation loss: 0.896793561645701  Accuracy: 0.7866
+Deep CNN Results
+Final test accuracy: 0.783
+Final validation accuracy: 0.7874
+Final training accuracy: 0.9631333333333333
+Final test loss: 0.7823500221322297
+Final validation loss: 0.7434142511102217
+Final training loss: 0.11109221391168168
+
+## CNN1
+
+Training ResNet18
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.4199830437921417  Accuracy: 0.1076
+Current validation loss: 2.2333193857958364  Accuracy: 0.184
+Current validation loss: 0.48718667153719886  Accuracy: 0.834
+Current validation loss: 0.4223777240343914  Accuracy: 0.8612
+Current validation loss: 0.43652550344634206  Accuracy: 0.857
+Current validation loss: 0.40704566382678453  Accuracy: 0.868
+Current validation loss: 0.3507938477074265  Accuracy: 0.8894
+ResNet18 Results
+Final test accuracy: 0.8594
+Final validation accuracy: 0.8612
+Final training accuracy: 0.9167777777777778
+Final test loss: 0.4217339298024345
+Final validation loss: 0.4223777240343914
+Final training loss: 0.24311655698914686
+Training Deep CNN
+Files already downloaded and verified
+Files already downloaded and verified
+Current validation loss: 2.3025155701214755  Accuracy: 0.1142
+Current validation loss: 2.3031094074249268  Accuracy: 0.0998
+Current validation loss: 1.3211866473849816  Accuracy: 0.5318
+Current validation loss: 1.105264667468735  Accuracy: 0.6094
+Current validation loss: 1.001411623592618  Accuracy: 0.6548
+Current validation loss: 1.0663297078277492  Accuracy: 0.6386
+Current validation loss: 0.8414579780795907  Accuracy: 0.7068
+Current validation loss: 0.7639186487922186  Accuracy: 0.738
+Current validation loss: 0.7524724025515062  Accuracy: 0.7394
+Current validation loss: 0.8154635037047954  Accuracy: 0.7144
+Current validation loss: 0.7341324773770345  Accuracy: 0.7458
+Current validation loss: 0.7533468211753459  Accuracy: 0.7418
+Current validation loss: 0.7384231784675694  Accuracy: 0.746
+Current validation loss: 0.7418877904928183  Accuracy: 0.7558
+Current validation loss: 0.7557713412031343  Accuracy: 0.7406
+Current validation loss: 0.8340817886062816  Accuracy: 0.7176
+Early stopping.
+Deep CNN Results
+Final test accuracy: 0.7618
+Final validation accuracy: 0.746
+Final training accuracy: 0.8375111111111111
+Final test loss: 0.7130771858297336
+Final validation loss: 0.7384231784675694
+Final training loss: 0.48296663601120765

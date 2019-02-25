@@ -7,8 +7,11 @@ from torch import nn
 from dataloaders import load_cifar10, mean, std
 from utils import to_cuda, compute_loss_and_accuracy
 
+#import CNN Model
+from deepCNN_2 import DeepCNNModel
 
-class ExampleModel(nn.Module):
+
+class ResNetModel(nn.Module):
 
     def __init__(self,
                  num_classes):
@@ -30,32 +33,67 @@ class ExampleModel(nn.Module):
         x = self.model(x)
         return x
 
+def init_weights(m):
+    if type(m) == torch.nn.Conv2d:
+        torch.nn.init.xavier_normal_(m.weight)
+        if m.bias is not None:
+            m.bias.data.fill_(0.0)
+    if type(m) == torch.nn.Linear:
+        torch.nn.init.xavier_normal_(m.weight)
+        m.bias.data.fill_(0.0)
 
 class Trainer:
 
-    def __init__(self):
+    def __init__(self, m):
         """
         Initialize our trainer class.
         Set hyperparameters, architecture, tracking variables etc.
         """
-        # Define hyperparameters
-        self.epochs = 2
-        self.batch_size = 32
-        self.learning_rate = 5e-4
-        self.early_stop_count = 4
+        if m == 2:
+            # Define hyperparameters
+            self.epochs = 2
+            self.batch_size = 32
+            self.learning_rate = 5e-4
+            self.early_stop_count = 4
 
-        # Architecture
+            # Architecture
 
-        # Since we are doing multi-class classification, we use the CrossEntropyLoss
-        self.loss_criterion = nn.CrossEntropyLoss()
-        # Initialize the mode
-        self.model = ExampleModel(num_classes=10)
-        # Transfer model to GPU VRAM, if possible.
-        self.model = to_cuda(self.model)
+            # Since we are doing multi-class classification, we use the CrossEntropyLoss
+            self.loss_criterion = nn.CrossEntropyLoss()
+            # Initialize the mode
+            self.model = ResNetModel(num_classes=10)
+            # Transfer model to GPU VRAM, if possible.
+            self.model = to_cuda(self.model)
 
-        # Define our optimizer. SGD = Stochastich Gradient Descent
-        self.optimizer = torch.optim.Adam(self.model.parameters(),
-                                         self.learning_rate)
+            # Define our optimizer. SGD = Stochastich Gradient Descent
+            self.optimizer = torch.optim.Adam(self.model.parameters(),
+                                            self.learning_rate)
+        
+        else:
+            # Define hyperparameters
+            self.epochs = 11
+            self.batch_size = 64
+            self.learning_rate = 5e-3
+            self.early_stop_count = 4
+
+            self.weight_decay = 0.0001
+
+            # Architecture
+
+            # Since we are doing multi-class classification, we use the CrossEntropyLoss
+            self.loss_criterion = nn.CrossEntropyLoss()
+            # Initialize the mode
+            self.model = DeepCNNModel(image_channels=3, num_classes=10)
+            self.model.apply(init_weights)
+            # Transfer model to GPU VRAM, if possible.
+            self.model = to_cuda(self.model)
+
+
+            # Define our optimizer. SGD = Stochastich Gradient Descent
+            self.optimizer = torch.optim.Adam(self.model.parameters(),
+                                                lr=self.learning_rate,
+                                                eps=1e-7,
+                                                weight_decay=self.weight_decay)
 
         # Load our dataset
         self.dataloader_train, self.dataloader_val, self.dataloader_test = load_cifar10(self.batch_size)
@@ -163,16 +201,27 @@ class Trainer:
 
         # print(self.model.model)        
         # print(self.model.model.children())
+
+        #Save weights visualization
+        weights = self.model.model.conv1.weight.data
+        #print(weights.shape)
+        torchvision.utils.save_image(weights, "weights_first_layer.png")
+
+        #Save First Layer Activations visualization
         first_layer_out = self.model.model.conv1(image)
+        #print(first_layer_out.shape)
         to_visualize = first_layer_out.view(first_layer_out.shape[1], 1, *first_layer_out.shape[2:])
+        #print(to_visualize.shape)
         torchvision.utils.save_image(to_visualize, "filters_first_layer.png")
 
+        #Pass image trought all layers but the last 2
         for name, child in self.model.model.named_children():
             if name not in ['avgpool', 'fc']:
-                print("Passing image through layer ", name)
+                #print("Passing image through layer ", name)
                 image = child(image)
 
-        to_visualize = image.view(image.shape[1], 1, *image.shape[2:])
+        #Save Last Conv. Layer Activations visualization
+        to_visualize = image.view(image.shape[1], 1, *image.shape[2:])[:64]
         torchvision.utils.save_image(to_visualize, "filters_last_layer.png")
         
 
@@ -180,7 +229,9 @@ class Trainer:
 
 
 if __name__ == "__main__":
-    trainer = Trainer()
+    
+    print("Training ResNet18")
+    trainer = Trainer(m = 2)
     trainer.train()
 
     trainer.visualize()
@@ -193,7 +244,7 @@ if __name__ == "__main__":
     plt.plot(trainer.TRAIN_LOSS, label="Training loss")
     plt.plot(trainer.TEST_LOSS, label="Testing Loss")
     plt.legend()
-    plt.savefig(os.path.join("plots", "final_loss.png"))
+    plt.savefig(os.path.join("plots", "final_loss_ResNet18.png"))
     plt.show()
 
     plt.figure(figsize=(12, 8))
@@ -202,9 +253,10 @@ if __name__ == "__main__":
     plt.plot(trainer.TRAIN_ACC, label="Training Accuracy")
     plt.plot(trainer.TEST_ACC, label="Testing Accuracy")
     plt.legend()
-    plt.savefig(os.path.join("plots", "final_accuracy.png"))
+    plt.savefig(os.path.join("plots", "final_accuracy_ResNet18.png"))
     plt.show()
 
+    print("ResNet18 Results")
     print("Final test accuracy:", trainer.TEST_ACC[-trainer.early_stop_count])
     print("Final validation accuracy:", trainer.VALIDATION_ACC[-trainer.early_stop_count])
     print("Final training accuracy:", trainer.TRAIN_ACC[-trainer.early_stop_count])
@@ -212,3 +264,29 @@ if __name__ == "__main__":
     print("Final test loss:", trainer.TEST_LOSS[-trainer.early_stop_count])
     print("Final validation loss:", trainer.VALIDATION_LOSS[-trainer.early_stop_count])
     print("Final training loss:", trainer.TRAIN_LOSS[-trainer.early_stop_count])
+
+    #Training DeepCNN for comparison
+    print("Training Deep CNN")
+    trainer_cnn = Trainer(m = 1)
+    trainer_cnn.train()
+
+    plt.figure(figsize=(12, 8))
+    plt.title("Cross Entropy Loss")
+    plt.plot(trainer.VALIDATION_LOSS, label="[ResNet18] Validation")
+    plt.plot(trainer.TRAIN_LOSS, label="[ResNet18] Training")
+    plt.plot(trainer.TEST_LOSS, label="[ResNet18] Test")
+    plt.plot(trainer_cnn.VALIDATION_LOSS, label="[DeepCNN] Validation")
+    plt.plot(trainer_cnn.TRAIN_LOSS, label="[DeepCNN] Training")
+    plt.plot(trainer_cnn.TEST_LOSS, label="[DeepCNN] Testing")
+    plt.legend()
+    plt.savefig(os.path.join("plots", "final_loss_Comparison.png"))
+    plt.show()
+
+    print("Deep CNN Results")
+    print("Final test accuracy:", trainer_cnn.TEST_ACC[-trainer_cnn.early_stop_count])
+    print("Final validation accuracy:", trainer_cnn.VALIDATION_ACC[-trainer_cnn.early_stop_count])
+    print("Final training accuracy:", trainer_cnn.TRAIN_ACC[-trainer_cnn.early_stop_count])
+
+    print("Final test loss:", trainer_cnn.TEST_LOSS[-trainer_cnn.early_stop_count])
+    print("Final validation loss:", trainer_cnn.VALIDATION_LOSS[-trainer_cnn.early_stop_count])
+    print("Final training loss:", trainer_cnn.TRAIN_LOSS[-trainer_cnn.early_stop_count])
